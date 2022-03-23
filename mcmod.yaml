@@ -1,0 +1,24 @@
+kind: pipeline
+type: docker
+name: release
+
+steps:
+    - name: build
+      image: adoptopenjdk/openjdk8
+      commands:
+          - chmod +x gradlew
+          - ./gradlew build
+    - name: publish
+      image: plugins/gitea-release
+      settings:
+          base_url: https://git.tilera.org
+          api_key:
+              from_secret: gitea_token
+          note: CHANGELOG.md
+          title: tag-${DRONE_TAG}
+          files:
+              - build/libs/*
+      when:
+          event: tag
+      depends_on:
+          - build

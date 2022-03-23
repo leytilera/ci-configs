@@ -1,0 +1,18 @@
+kind: pipeline
+type: docker
+name: release
+
+steps:
+    - name: docker
+      image: plugins/docker
+      settings:
+          username: root
+          password:
+              from_secret: docker_pw
+          repo: dock.tilera.xyz/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+          registry: dock.tilera.xyz
+          tags:
+              - latest
+              - ${DRONE_TAG}
+      when:
+          event: tag

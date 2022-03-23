@@ -1,0 +1,27 @@
+kind: pipeline
+type: docker
+name: release
+
+steps:
+    - name: build
+      image: ghcr.io/peaceiris/docker-mdbook/mdbook:v0.4.4
+      entrypoint: [ /usr/bin/mdbook ]
+      command:
+        - build
+    - name: publish
+      image: appleboy/drone-scp
+      settings:
+        host: web.tilera.xyz
+        username: webmaster
+        password: 
+          from_secret: web_pw
+        port: 2220
+        target: /home/webmaster/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+        source: public/*
+        rm: true
+        strip_components: 1
+      when:
+          branch: master
+          event: push
+      depends_on:
+          - build
