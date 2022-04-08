@@ -22,3 +22,15 @@ steps:
           event: tag
       depends_on:
           - build
+    - name: maven
+      image: adoptopenjdk/openjdk8
+      environment:
+        ORG_GRADLE_PROJECT_mvnURL: https://data.tilera.xyz/maven
+        ORG_GRADLE_PROJECT_mvnUsername: tilera
+        ORG_GRADLE_PROJECT_mvnPassword:
+            from_secret: mvn_pw
+      commands:
+          - chmod +x gradlew
+          - ./gradlew publish
+      when:
+          event: tag
