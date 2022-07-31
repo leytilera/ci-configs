@@ -6,9 +6,9 @@ steps:
     - name: docker
       image: plugins/docker
       settings:
-          username: root
+          username: ${DRONE_REPO_OWNER}
           password:
-              from_secret: docker_pw
+              from_secret: gitea_token
           repo: dock.tilera.xyz/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
           registry: dock.tilera.xyz
           tags:
