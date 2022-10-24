@@ -8,6 +8,8 @@ steps:
       commands:
           - chmod +x gradlew
           - ./gradlew build
+      when:
+          event: push
     - name: maven
       image: adoptopenjdk/openjdk8
       environment:
@@ -18,7 +20,5 @@ steps:
       commands:
           - chmod +x gradlew
           - ./gradlew publish
-      depends_on:
-          - build
       when:
           event: tag
