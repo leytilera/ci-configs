@@ -12,12 +12,12 @@ steps:
           event: push
     - name: maven
       image: adoptopenjdk/openjdk8
+      secrets: [ gitea_token ]
       environment:
         ORG_GRADLE_PROJECT_mvnURL: https://maven.tilera.xyz
         ORG_GRADLE_PROJECT_mvnUsername: tilera
-        ORG_GRADLE_PROJECT_mvnPassword:
-            from_secret: gitea_token
       commands:
+          - export ORG_GRADLE_PROJECT_mvnPassword=$GITEA_TOKEN
           - chmod +x gradlew
           - ./gradlew publish
       when:
