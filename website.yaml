@@ -5,8 +5,9 @@ name: release
 steps:
     - name: build
       image: ghcr.io/getzola/zola:v0.15.3
-      commands:
-        - zola build
+      entrypoint: [ /bin/zola ]
+      command:
+        - build
     - name: upload
       image: appleboy/drone-scp
       settings:
