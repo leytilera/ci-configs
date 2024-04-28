@@ -1,18 +1,14 @@
-kind: pipeline
-type: docker
-name: release
-
 steps:
     - name: docker
       image: plugins/docker
       settings:
-          username: ${DRONE_REPO_OWNER}
+          username: ${CI_REPO_OWNER}
           password:
               from_secret: gitea_token
-          repo: dock.tilera.xyz/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+          repo: dock.tilera.xyz/${CI_REPO_OWNER}/${CI_REPO_NAME}
           registry: dock.tilera.xyz
           tags:
               - latest
-              - ${DRONE_TAG}
+              - ${CI_COMMIT_TAG}
       when:
           event: tag
