@@ -1,25 +1,19 @@
-kind: pipeline
-type: docker
-name: release
-
 steps:
     - name: build
-      image: ghcr.io/getzola/zola:v0.15.3
-      entrypoint: [ /bin/zola ]
-      command:
-        - build
+      image: alpine
+      commands:
+        - apk add zola
+        - zola build
     - name: upload
-      image: appleboy/drone-scp
-      settings:
-        host: git.tilera.org
-        username: webmaster
-        password: 
-          from_secret: web_pw
-        port: 2220
-        target: /home/webmaster/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
-        source: public/*
-        rm: true
-        strip_components: 1
+      image: rclone/rclone:latest
+      secrets: [ web_pw ]
+      commands:
+        - export RCLONE_SFTP_PASS="$(rclone obscure $WEB_PW)"
+        - rclone sync ./public/ :sftp:/home/webmaster/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+      environment:
+        RCLONE_SFTP_HOST: git.tilera.org
+        RCLONE_SFTP_USER: webmaster
+        RCLONE_SFTP_PORT: "2220"
       when:
           branch: master
           event: push
