@@ -11,7 +11,7 @@ steps:
           api_key:
               from_secret: gitea_token
           note: CHANGELOG.md
-          title: ${DRONE_TAG}
+          title: ${CI_COMMIT_TAG}
           files:
               - build/*
       when:

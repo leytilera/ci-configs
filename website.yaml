@@ -9,11 +9,11 @@ steps:
       secrets: [ web_pw ]
       commands:
         - export RCLONE_SFTP_PASS="$(rclone obscure $WEB_PW)"
-        - rclone sync ./public/ :sftp:/home/webmaster/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+        - rclone sync ./public/ :sftp:/${CI_REPO_OWNER}/${CI_REPO_NAME}
       environment:
         RCLONE_SFTP_HOST: git.tilera.org
         RCLONE_SFTP_USER: webmaster
-        RCLONE_SFTP_PORT: "2220"
+        RCLONE_SFTP_PORT: "2022"
       when:
           branch: master
           event: push
