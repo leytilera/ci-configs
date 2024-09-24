@@ -15,7 +15,8 @@ steps:
         RCLONE_SFTP_USER: webmaster
         RCLONE_SFTP_PORT: "2022"
       when:
+        - event: push
           branch: master
-          event: push
+        - event: manual  
       depends_on:
           - build
