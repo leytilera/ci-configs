@@ -1,13 +1,13 @@
 steps:
     - name: build
-      image: adoptopenjdk/openjdk8
+      image: dock.tilera.xyz/tilera/mcbuild
       commands:
           - chmod +x gradlew
           - ./gradlew build
       when:
           event: push
     - name: maven
-      image: adoptopenjdk/openjdk8
+      image: dock.tilera.xyz/tilera/mcbuild
       secrets: [ gitea_token ]
       environment:
         ORG_GRADLE_PROJECT_mvnURL: https://maven.tilera.xyz
