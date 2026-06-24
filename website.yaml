@@ -14,6 +14,8 @@ steps:
         RCLONE_SFTP_HOST: git.tilera.org
         RCLONE_SFTP_USER: webmaster
         RCLONE_SFTP_PORT: "2022"
+        WEB_PW:
+          from_secret: web_pw
       when:
         - event: push
           branch: master
