@@ -1,6 +1,6 @@
 steps:
     - name: build
-      image: dock.tilera.xyz/tilera/mcbuild
+      image: adoptopenjdk/openjdk8
       commands:
           - chmod +x mpt
           - ./mpt buildtwitch
