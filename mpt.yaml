@@ -5,6 +5,8 @@ steps:
           - chmod +x mpt
           - ./mpt buildtwitch
           - ./mpt buildtechnic
+      when:
+        - event: manual  
     - name: publish
       image: plugins/gitea-release
       settings:
