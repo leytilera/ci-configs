@@ -6,7 +6,8 @@ steps:
           - ./mpt buildtwitch
           - ./mpt buildtechnic
       when:
-        - event: manual  
+        - event: manual
+        - event: tag
     - name: publish
       image: plugins/gitea-release
       settings:
