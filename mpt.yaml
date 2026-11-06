@@ -1,8 +1,9 @@
 clone:
-    plugin: git
-    settings:
-        depth: 0
-        tags: true
+    - name: git
+      image: woodpeckerci/plugin-git   
+      settings:
+          depth: 0
+          tags: true
 steps:
     - name: build
       image: adoptopenjdk/openjdk8
