@@ -15,7 +15,7 @@ steps:
         - event: manual
         - event: tag
     - name: generate-changelog
-      image: ghcr.io/orhun/git-cliff:latest
+      image: orhunp/git-cliff:latest
       commands:
           - git-cliff --output CHANGELOG.md -l --verbose
       when:
