@@ -1,3 +1,8 @@
+clone:
+    plugin: git
+    settings:
+        depth: 0
+        tags: true
 steps:
     - name: build
       image: adoptopenjdk/openjdk8
@@ -5,6 +10,13 @@ steps:
           - chmod +x mpt
           - ./mpt buildtwitch
           - ./mpt buildtechnic
+      when:
+        - event: manual
+        - event: tag
+    - name: generate-changelog
+      image: ghcr.io/orhun/git-cliff:latest
+      commands:
+          - git-cliff --output CHANGELOG.md -l --verbose
       when:
         - event: manual
         - event: tag
@@ -22,3 +34,4 @@ steps:
           event: tag
       depends_on:
           - build
+          - generate-changelog
